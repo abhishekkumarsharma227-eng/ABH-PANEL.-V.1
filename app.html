@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050907">
+<title>ABHI PANEL</title>
+
+<style>
+:root {
+  --green: #00ff88;
+  --bg: #050907;
+  --card: #0b1510;
+  --border: #19442f;
+  --text: #edfff4;
+  --muted: #8ba99a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background: radial-gradient(ellipse at top, #103322, #050907 65%);
+  font-family: Arial, sans-serif;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+.hidden { display: none !important; }
+
+header {
+  text-align: center;
+  padding: 22px 15px 18px;
+  background: #050b08ed;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 12px;
+  border: 2px solid var(--green);
+  border-radius: 19px;
+  color: var(--green);
+  font-size: 25px;
+  font-weight: 900;
+  box-shadow: 0 0 25px #00ff8833;
+  animation: glow 3s infinite;
+}
+
+h1 {
+  margin: 5px 0;
+  color: var(--green);
+  letter-spacing: 4px;
+  font-size: 25px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+main {
+  max-width: 480px;
+  margin: auto;
+  padding: 18px 15px 105px;
+}
+
+.card {
+  margin: 15px 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #0d1b12, #080e0a);
+  box-shadow: 0 10px 25px #0004;
+}
+
+h2 {
+  margin-top: 0;
+  color: var(--green);
+  font-size: 19px;
+}
+
+.label {
+  display: block;
+  margin: 17px 0 7px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #28583e;
+  border-radius: 9px;
+  outline: none;
+  color: white;
+  background: #050907;
+}
+
+input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 12px #00ff8820;
+}
+
+.primary {
+  width: 100%;
+  margin-top: 19px;
+  padding: 14px;
+  border: none;
+  border-radius: 9px;
+  background: var(--green);
+  color: #001b0d;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.primary:active { transform: scale(.98); }
+
+.status {
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.error {
+  color: #ff8080;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 0;
+  border-bottom: 1px solid #193124;
+}
+
+.feature:last-of-type { border-bottom: none; }
+
+.feature-name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.feature-desc {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.switch {
+  flex-shrink: 0;
+  width: 48px;
+  height: 27px;
+  padding: 3px;
+  border: 1px solid #526357;
+  border-radius: 30px;
+  background: #202a23;
+}
+
+.switch::after {
+  content: "";
+  display: block;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #a1b2a7;
+  transition: .2s;
+}
+
+.switch.on {
+  border-color: var(--green);
+  background: #007a42;
+}
+
+.switch.on::after {
+  background: var(--green);
+  transform: translateX(20px);
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--green);
+  background: #0a1b11;
+  font-size: 10px;
+}
+
+.bottom-nav {
+  position: fixed;
+  z-index: 5;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: 4px;
+  padding: 9px 5px calc(9px + env(safe-area-inset-bottom));
+  background: #07100bed;
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 12px 2px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.nav-btn.active {
+  border-color: var(--border);
+  background: #10251a;
+  color: var(--green);
+}
+
+.about-line {
+  padding: 13px 0;
+  border-bottom: 1px solid #193124;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.about-line strong { color: var(--text); }
+
+.big-icon {
+  margin: 10px;
+  text-align: center;
+  font-size: 45px;
+}
+
+.heart {
+  margin: 25px 0;
+  text-align: center;
+  font-size: 35px;
+  color: var(--green);
+  animation: pulse 1.5s infinite;
+}
+
+.center { text-align: center; }
+
+@keyframes pulse {
+  50% { transform: scale(1.1); }
+}
+
+@keyframes glow {
+  50% { box-shadow: 0 0 25px #00ff8828; }
+}
+
+footer {
+  padding: 16px 5px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">AP</div>
+  <h1>ABHI PANEL</h1>
+  <div class="subtitle">ADVANCED INTERFACE DEMO</div>
+</header>
+
+<main>
+
+  <!-- LOGIN -->
+  <section id="loginPage">
+    <div class="card">
+      <div class="status">● DEMO AUTHENTICATION</div>
+      <h2 style="margin-top:20px">Welcome Back</h2>
+      <p class="muted">Enter your login details to continue.</p>
+
+      <form id="loginForm">
+        <label class="label" for="username">USERNAME</label>
+        <input id="username"
+               type="text"
+               placeholder="Enter username"
+               autocomplete="username"
+               required>
+
+        <label class="label" for="password">PASSWORD</label>
+        <input id="password"
+               type="password"
+               placeholder="Enter password"
+               autocomplete="current-password"
+               required>
+
+        <button class="primary" type="submit">LOGIN →</button>
+        <div id="loginError" class="error" role="alert"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="status">SYSTEM INFORMATION</div>
+      <p class="muted">
+        Welcome to ABHI PANEL. This is a visual demonstration
+        with interactive controls and animated effects.
+      </p>
+    </div>
+  </section>
+
+  <!-- PANEL -->
+  <section id="panelPage" class="hidden">
+    <div class="card">
+      <div class="status">● SESSION ACTIVE</div>
+      <h2 style="margin-top:16px">Control Dashboard</h2>
+      <p class="muted">
+        Preview the interface by switching demo controls on or off.
+      </p>
+      <span class="badge">UI MODE: DEMO ONLY</span>
+    </div>
+
+    <div class="card">
+      <h2>Panel Options</h2>
+
+      <div class="feature">
+        <div>
+          <div class="feature-name">Moco Location</div>
+          <div class="feature-desc">Visual demo switch</div>
+        </div>
+        <button class="switch" type="button"
+          aria-label="Moco Location"
+          aria-pressed="false" data-name="Moco Location"></button>
+      </div>
+
+      <div class="feature">
+        <div>
+          <div class="feature-name">Aimbot</div>
+          <div class="feature-desc">Visual demo switch only</div>
+        </div>
+        <button class="switch" type="button"
+          aria-label="Aimbot"
+          aria-pressed="false" data-name="Aimbot"></button>
+      </div>
+
+      <div class="feature">
+        <div>
+          <div class="feature-name">ESP Location</div>
+          <div class="feature-desc">Visual demo switch only</div>
+        </div>
+        <button class="switch" type="button"
+          aria-label="ESP Location"
+          aria-pressed="false" data-name="ESP Location"></button>
+      </div>
+
+      <div class="feature">
+        <div>
+          <div class="feature-name">Aim Lag</div>
+          <div class="feature-desc">Visual demo switch only</div>
+        </div>
+        <button class="switch" type="button"
+          aria-label="Aim Lag"
+          aria-pressed="false" data-name="Aim Lag"></button>
+      </div>
+
+      <div class="feature">
+        <div>
+          <div class="feature-name">Freeze</div>
+          <div class="feature-desc">Visual demo switch only</div>
+        </div>
+        <button class="switch" type="button"
+          aria-label="Freeze"
+          aria-pressed="false" data-name="Freeze"></button>
+      </div>
+
+      <div class="feature">
+        <div>
+          <div class="feature-name">Scope</div>
+          <div class="feature-desc">Visual demo switch only</div>
+        </div>
+        <button class="switch" type="button"
+          aria-label="Scope"
+          aria-pressed="false" data-name="Scope"></button>
+      </div>
+
+      <div class="feature">
+        <div>
+          <div class="feature-name">Fire</div>
+          <div class="feature-desc">Visual demo switch only</div>
+        </div>
+        <button class="switch" type="button"
+          aria-label="Fire"
+          aria-pressed="false" data-name="Fire"></button>
+      </div>
+
+      <button id="doneButton" class="primary" type="button">
+        DONE — SAVE DEMO STATE
+      </button>
+      <p id="doneStatus" class="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="aboutPage" class="hidden">
+    <div class="card">
+      <div class="big-icon">⌘</div>
+      <h2 class="center">About ABHI PANEL</h2>
+      <p class="muted">
+        ABHI PANEL is a black-and-green interface demo featuring
+        a login screen, interactive switches and navigation pages.
+      </p>
+
+      <div class="about-line"><strong>App Name:</strong> ABHI PANEL</div>
+      <div class="about-line"><strong>Version:</strong> 1.0 Demo</div>
+      <div class="about-line"><strong>Interface:</strong> Green / Black</div>
+      <div class="about-line"><strong>Controls:</strong> Visual only</div>
+      <div class="about-line"><strong>Purpose:</strong> UI learning project</div>
+    </div>
+  </section>
+
+  <!-- THANK YOU -->
+  <section id="thankPage" class="hidden">
+    <div class="card">
+      <div class="big-icon">✦</div>
+      <h2 class="center">THANK YOU</h2>
+
+      <p class="center muted">
+        Thank you everyone for supporting me.
+      </p>
+
+      <div class="heart">♥</div>
+
+      <p class="center" style="color:var(--green);font-weight:bold">
+        YOUR SUPPORT MEANS EVERYTHING
+      </p>
+
+      <p class="center muted">
+        Made with dedication by ABHI
+      </p>
+
+      <button id="logoutButton" class="primary" type="button">
+        LOG OUT
+      </button>
+    </div>
+  </section>
+
+  <footer>ABHI PANEL • VERSION 1.0 • DEMO BUILD</footer>
+</main>
+
+<!-- NAVIGATION: SHOWN AFTER LOGIN -->
+<nav id="bottomNav" class="bottom-nav hidden" aria-label="Main navigation">
+  <button class="nav-btn active" data-page="panelPage" type="button">
+    ▣<br>Panel
+  </button>
+  <button class="nav-btn" data-page="aboutPage" type="button">
+    ⓘ<br>About
+  </button>
+  <button class="nav-btn" data-page="thankPage" type="button">
+    ♥<br>Thank You
+  </button>
+</nav>
+
+<script>
+"use strict";
+
+const DEMO_USERNAME = "ABHI412";
+const DEMO_PASSWORD = "ABHI2255";
+
+const loginForm = document.getElementById("loginForm");
+const loginError = document.getElementById("loginError");
+const bottomNav = document.getElementById("bottomNav");
+
+const pages = [
+  "loginPage",
+  "panelPage",
+  "aboutPage",
+  "thankPage"
+];
+
+function showPage(pageId) {
+  pages.forEach(id => {
+    document.getElementById(id).classList.toggle(
+      "hidden", id !== pageId
+    );
+  });
+
+  const loggedIn = pageId !== "loginPage";
+  bottomNav.classList.toggle("hidden", !loggedIn);
+
+  document.querySelectorAll(".nav-btn").forEach(button => {
+    button.classList.toggle(
+      "active", button.dataset.page === pageId
+    );
+  });
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+loginForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (username === DEMO_USERNAME && password === DEMO_PASSWORD) {
+    loginError.textContent = "";
+    showPage("panelPage");
+  } else {
+    loginError.textContent = "Invalid username or password.";
+  }
+});
+
+document.querySelectorAll(".switch").forEach(button => {
+  button.addEventListener("click", function() {
+    const enabled = !button.classList.contains("on");
+
+    button.classList.toggle("on", enabled);
+    button.setAttribute("aria-pressed", String(enabled));
+  });
+});
+
+document.querySelectorAll(".nav-btn").forEach(button => {
+  button.addEventListener("click", function() {
+    showPage(button.dataset.page);
+  });
+});
+
+document.getElementById("doneButton").addEventListener("click", function() {
+  const enabled = [...document.querySelectorAll(".switch.on")]
+    .map(button => button.dataset.name);
+
+  const status = document.getElementById("doneStatus");
+
+  if (enabled.length === 0) {
+    status.textContent = "Demo saved: all switches are OFF.";
+  } else {
+    status.textContent = "Demo saved: " + enabled.join(", ") + " ON.";
+  }
+});
+
+document.getElementById("logoutButton").addEventListener("click", function() {
+  loginForm.reset();
+  document.getElementById("doneStatus").textContent = "";
+  document.querySelectorAll(".switch").forEach(button => {
+    button.classList.remove("on");
+    button.setAttribute("aria-pressed", "false");
+  });
+
+  showPage("loginPage");
+});
+</script>
+
+</body>
+</html>

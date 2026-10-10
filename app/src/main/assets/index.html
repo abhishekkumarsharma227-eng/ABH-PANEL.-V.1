@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABH PANEL</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#050807;color:#eaffef;
+  font-family:Arial,sans-serif;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+}
+.container{
+  width:92%;max-width:390px;background:#0b1410;
+  border:1px solid #00ff8860;border-radius:20px;
+  padding:24px;box-shadow:0 0 28px #00ff8820;
+}
+.logo{
+  width:70px;height:70px;border:2px solid #00ff88;
+  border-radius:18px;display:flex;align-items:center;
+  justify-content:center;font-size:27px;font-weight:bold;
+  color:#00ff88;margin:0 auto 12px;
+  box-shadow:0 0 20px #00ff8830;
+}
+h1{text-align:center;font-size:25px;letter-spacing:3px;margin:8px 0}
+.subtitle{text-align:center;color:#8ca997;font-size:12px;margin-bottom:25px}
+input{
+  width:100%;padding:14px;margin:8px 0;background:#07100b;
+  border:1px solid #244a35;border-radius:10px;color:white;
+  outline:none;font-size:14px;
+}
+button{
+  width:100%;padding:13px;border:1px solid #00ff88;
+  border-radius:10px;background:#00ff88;color:#031008;
+  font-weight:bold;font-size:14px;margin-top:12px;
+}
+button:active{opacity:.7}
+.error{text-align:center;color:#ff7777;font-size:12px}
+.hidden{display:none}
+.topline{display:flex;justify-content:space-between;align-items:center}
+.badge{font-size:10px;color:#00ff88;border:1px solid #00ff88;padding:6px 9px;border-radius:20px}
+h2{font-size:19px;margin:22px 0 6px}
+.desc{font-size:12px;color:#8ca997;margin-bottom:20px}
+.option{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px;margin:10px 0;background:#101d15;
+  border:1px solid #1e3d2a;border-radius:11px;
+}
+.option span{font-size:13px}
+.switch{width:43px;height:24px;position:relative}
+.switch input{display:none}
+.slider{position:absolute;inset:0;background:#334239;border-radius:20px}
+.slider:before{
+  content:"";position:absolute;width:18px;height:18px;
+  left:3px;top:3px;background:white;border-radius:50%;
+  transition:.2s;
+}
+.switch input:checked + .slider{background:#00c875}
+.switch input:checked + .slider:before{transform:translateX(19px)}
+.note{
+  color:#8ca997;font-size:11px;line-height:1.6;
+  border:1px solid #244a35;padding:12px;border-radius:10px;margin-top:18px
+}
+.nav{display:flex;gap:7px;margin-top:18px}
+.nav button{font-size:11px;padding:10px 4px;margin:0}
+.nav button.active{background:#07100b;color:#00ff88}
+.footer{text-align:center;color:#547461;font-size:10px;margin-top:20px}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <section id="login">
+    <div class="logo">AP</div>
+    <h1>ABH PANEL</h1>
+    <div class="subtitle">ADVANCED VISUAL DEMO</div>
+
+    <input id="username" placeholder="Enter username" autocomplete="off">
+    <input id="password" type="password" placeholder="Enter password">
+
+    <button onclick="login()">LOGIN TO PANEL</button>
+    <p id="error" class="error"></p>
+
+    <div class="footer">SECURE DEMO INTERFACE · V1.0</div>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="topline">
+      <strong>ABH PANEL</strong>
+      <span class="badge">● DEMO MODE</span>
+    </div>
+
+    <div id="home">
+      <h2>Control Dashboard</h2>
+      <div class="desc">Welcome! Manage your visual demo settings.</div>
+
+      <div id="options"></div>
+
+      <div class="note">
+        DEMO ONLY: These switches demonstrate the interface.
+        They do not modify games, provide cheats, or affect other apps.
+      </div>
+    </div>
+
+    <div id="about" class="hidden">
+      <h2>About ABH</h2>
+      <p class="desc">ABH PANEL is a personal visual-interface demo.</p>
+      <div class="note">Version: 1.0<br>Mode: Visual demo only<br>Interface: Black / Green</div>
+    </div>
+
+    <div id="thanks" class="hidden">
+      <h2>Thank You!</h2>
+      <p class="desc">Thanks for trying the ABH PANEL demo.</p>
+      <button onclick="logout()">LOG OUT</button>
+    </div>
+
+    <div class="nav">
+      <button class="active" onclick="showPage('home',this)">HOME</button>
+      <button onclick="showPage('about',this)">ABOUT</button>
+      <button onclick="showPage('thanks',this)">THANK YOU</button>
+    </div>
+    <button onclick="logout()" style="background:#101d15;color:#00ff88">LOG OUT</button>
+    <div class="footer">ABH PANEL · VISUAL DEMO</div>
+  </section>
+
+</div>
+
+<script>
+const demoUsername = "ABHI412";
+const demoPassword = "ABHI2255";
+
+function login(){
+  const u = document.getElementById("username").value.trim();
+  const p = document.getElementById("password").value;
+  if(u === demoUsername && p === demoPassword){
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    document.getElementById("error").textContent = "";
+  }else{
+    document.getElementById("error").textContent =
+      "Incorrect demo username or password.";
+  }
+}
+
+const names = [
+  "Moco Location",
+  "Aimbot",
+  "ESP Location",
+  "Aim Lag",
+  "Freeze",
+  "Scope",
+  "Fire"
+];
+
+document.getElementById("options").innerHTML = names.map((name,i)=>`
+  <div class="option">
+    <span>${name}</span>
+    <label class="switch">
+      <input type="checkbox" aria-label="${name}">
+      <span class="slider"></span>
+    </label>
+  </div>
+`).join("");
+
+function showPage(page,button){
+  ["home","about","thanks"].forEach(id=>{
+    document.getElementById(id).classList.toggle("hidden",id!==page);
+  });
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+}
+
+function logout(){
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("login").classList.remove("hidden");
+  document.getElementById("username").value="";
+  document.getElementById("password").value="";
+}
+</script>
+</body>
+</html>
